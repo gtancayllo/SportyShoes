@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en"
+    xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Registration and Login System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #0d6efd">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/index}">Sporty Shoes Home </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>    
+        <div th:replace="navbar :: navbar"></div>
+    </div>
+</nav>
+<br /><br />
+<div class="container">
+    <div class="row">
+        <div  class="row col-md-8 offset-md-2">
+
+
+ <form method="post"
+            role="form"
+            th:action="@{/searchOrders}"            
+          >
+          <table cellpadding="5px">
+          <td>Order Date</td>
+          <td><input
+                class="form-control"
+                id="orderDate"
+                name="orderDate"                                            
+                type="text"
+        /></td>
+        <td>Category&nbsp;</td>       
+        <td><select class="form-control" id="categoryName">
+		<option th:each="category : ${categories}" th:value="${category.categoryName}" th:text="${category.categoryName}"></option>
+	</select></td>
+	<td><button class="btn btn-primary" type="submit">Search</button></td>
+          </table>
+</form>		              
+
+
+<table  class="table table-striped">
+<thead>
+		<tr>
+			<th scope="col">ID</th>
+			<th scope="col">Purchase date</th>
+			<th scope="col">Ordered by</th>
+			<th scope="col">Total Cost</th>
+			<th scope="col">Categories</th>
+			<th scope="col"></th>
+		</tr>
+		</thead>
+		<tbody>
+		   
+		<tr th:each="data : ${purchaseOrderList}">
+					<th scope="row"><span th:text="${data.id}"> </span></th>
+					<td><span th:text="${#dates.format(data.orderDate,'dd-MM-yyyy')}"> </span></td>
+					<td><span th:text="${data.orderedByUser.lastname + ', ' + data.orderedByUser.firstname}"> </span></td>
+					<td><span th:text="${data.totalCost}"> </span></td>
+					<td><span th:text="${data.categories}"> </span></td>
+					<td>
+					
+					<a aria-current="page" th:href="@{/viewOrder(id=${data.id})}" class="text-primary"><i class="fa fa-fw fa-edit"></i> View Order</a>
+					</td>
+				</tr>
+		</tbody>
+</table>
+
+		</div>
+    </div>
+</div>
+</body>
+</html>

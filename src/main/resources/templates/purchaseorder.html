@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Registration and Login System</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+        crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #0d6efd">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/index}">Sporty Shoes Home </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>    
+        <div th:replace="navbar :: navbar"></div>  
+    </div>
+</nav>
+<br /><br /><br />
+<div class="container">
+  <div class="row col-md-8 offset-md-2">
+    <a href="javascript:history.back()">Go back</a>
+    <div class="card">
+      <div class="card-header">
+          <h2 class="text-center">Purchase Order</h2>
+      </div>
+     
+     <div class="card-body">
+              
+              <div class="modal-body text-start text-black p-4">
+                <h5 class="modal-title text-uppercase mb-5" id="exampleModalLabel" th:text="${purchaseOrder.orderedByUser.firstname+ ' '+ purchaseOrder.orderedByUser.lastname}"></h5>
+                <p class="mb-0" style="color: #35558a;"><span class="fw-bold mb-0">Order Date:</span> <span th:text="${#dates.format(purchaseOrder.orderDate,'dd-MM-yyyy')}"></span> </p>
+                <p class="mb-0" style="color: #35558a;">Payment summary</p>
+                <hr class="mt-2 mb-4"
+                  style="height: 0; background-color: transparent; opacity: .75; border-top: 2px dashed #9e9e9e;">
+
+                <div class="d-flex justify-content-between" th:each="detail : ${purchaseOrder.orderDetails}">
+                  <p><span th:text="${detail.product.productName}"></span> <span class="fw-bold mb-0">(Category:</span><span th:text="${detail.product.category.categoryName}"></span> <span class="fw-bold mb-0">,Qty:</span><span th:text="${detail.quantity}"></span><span class="fw-bold mb-0">)</span></p>
+                  <p class="text-muted mb-0">$<span th:text="${detail.cost}"></span></p>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                  <p class="fw-bold">Total</p>
+                  <p class="fw-bold" style="color: #35558a;">$<span th:text="${purchaseOrder.totalCost}"></span></p>
+                </div>
+
+              </div>
+            </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
